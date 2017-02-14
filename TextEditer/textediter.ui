@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TextEditer</class>
+ <widget class="QMainWindow" name="TextEditer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1022</width>
+    <height>484</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>TextEditer</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="documentMode">
+       <bool>true</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
+      <property name="tabBarAutoHide">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="tab1">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab2">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3"/>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1022</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="fileMenu">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="openFileAction"/>
+    <addaction name="newFileAction"/>
+    <addaction name="saveAction"/>
+    <addaction name="saveAsAction"/>
+    <addaction name="closeAction"/>
+   </widget>
+   <widget class="QMenu" name="editMenu">
+    <property name="title">
+     <string>编辑</string>
+    </property>
+    <addaction name="undoAction"/>
+    <addaction name="redoAction"/>
+    <addaction name="copyAction"/>
+    <addaction name="cutAction"/>
+    <addaction name="pasteAction"/>
+   </widget>
+   <addaction name="fileMenu"/>
+   <addaction name="editMenu"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="colorAction"/>
+   <addaction name="italicAction"/>
+   <addaction name="boldAction"/>
+   <addaction name="underLineAction"/>
+   <addaction name="separator"/>
+   <addaction name="centerAction"/>
+   <addaction name="justifyAction"/>
+   <addaction name="leftAction"/>
+   <addaction name="rightAction"/>
+   <addaction name="separator"/>
+   <addaction name="undoAction"/>
+   <addaction name="redoAction"/>
+   <addaction name="separator"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="openFileAction">
+   <property name="text">
+    <string>打开(Ctrl+O)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="newFileAction">
+   <property name="text">
+    <string>新建(Ctrl+N)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="saveAction">
+   <property name="text">
+    <string>保存(Ctrl+S)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="saveAsAction">
+   <property name="text">
+    <string>另存为</string>
+   </property>
+  </action>
+  <action name="closeAction">
+   <property name="text">
+    <string>关闭</string>
+   </property>
+  </action>
+  <action name="copyAction">
+   <property name="text">
+    <string>复制(Ctrl+C)</string>
+   </property>
+  </action>
+  <action name="cutAction">
+   <property name="text">
+    <string>剪切(Ctrl+X)</string>
+   </property>
+  </action>
+  <action name="pasteAction">
+   <property name="text">
+    <string>粘贴(Ctrl+V)</string>
+   </property>
+  </action>
+  <action name="undoAction">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/undo.png</normaloff>icons/undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>撤销(Ctrl+Z)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="redoAction">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/redo.png</normaloff>icons/redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>重做(Ctrl+Y)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="colorAction">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/color.png</normaloff>icons/color.png</iconset>
+   </property>
+   <property name="text">
+    <string>颜色</string>
+   </property>
+   <property name="toolTip">
+    <string>改变颜色</string>
+   </property>
+  </action>
+  <action name="boldAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/bold.png</normaloff>icons/bold.png</iconset>
+   </property>
+   <property name="text">
+    <string>加粗</string>
+   </property>
+   <property name="toolTip">
+    <string>加粗</string>
+   </property>
+  </action>
+  <action name="centerAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/center.png</normaloff>icons/center.png</iconset>
+   </property>
+   <property name="text">
+    <string>中心对称</string>
+   </property>
+   <property name="toolTip">
+    <string>中心对称</string>
+   </property>
+  </action>
+  <action name="justifyAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/justify.png</normaloff>icons/justify.png</iconset>
+   </property>
+   <property name="text">
+    <string>适应</string>
+   </property>
+   <property name="toolTip">
+    <string>适应</string>
+   </property>
+  </action>
+  <action name="leftAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/left.png</normaloff>icons/left.png</iconset>
+   </property>
+   <property name="text">
+    <string>左对齐</string>
+   </property>
+   <property name="toolTip">
+    <string>左对齐</string>
+   </property>
+  </action>
+  <action name="rightAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/right.png</normaloff>icons/right.png</iconset>
+   </property>
+   <property name="text">
+    <string>右对齐</string>
+   </property>
+   <property name="toolTip">
+    <string>右对齐</string>
+   </property>
+  </action>
+  <action name="italicAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/italic.png</normaloff>icons/italic.png</iconset>
+   </property>
+   <property name="text">
+    <string>斜体</string>
+   </property>
+   <property name="toolTip">
+    <string>斜体</string>
+   </property>
+  </action>
+  <action name="underLineAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/underline.png</normaloff>icons/underline.png</iconset>
+   </property>
+   <property name="text">
+    <string>下划线</string>
+   </property>
+   <property name="toolTip">
+    <string>下划线</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
