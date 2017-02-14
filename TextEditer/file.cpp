@@ -4,12 +4,6 @@
 #include"QFileDialog"
 #include"QDebug"
 
-#ifdef Q_OS_WIN32//地址分隔符
-#define ADDRESS_SEPARATOR '\\'
-#else
-#define ADDRESS_SEPARATOR '/'
-#endif
-
 void TextEditer::openFile(){
     QString fileName = QFileDialog::getOpenFileName(this,"打开新文件");
     if(fileName.isEmpty()){//未选中文件
@@ -63,8 +57,8 @@ void TextEditer::save(){
     int index = ui->tabWidget->currentIndex();
     QString fileName = ui->tabWidget->tabText(index);
     qDebug()<<fileName;
-    if(!fileName.endsWith(tr(".te"))){
-        fileName.append(tr(".te"));
+    if(!fileName.endsWith(tr(".html"))){
+        fileName.append(tr(".html"));
     }
     QFile file(fileName);
     if(!file.open(QFile::WriteOnly)){
