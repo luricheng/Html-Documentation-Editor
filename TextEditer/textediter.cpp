@@ -1,13 +1,6 @@
 #include "textediter.h"
 #include "ui_textediter.h"
-
-
-#ifdef Q_OS_WIN32//地址分隔符
-#define ADDRESS_SEPARATOR '\\'
-#else
-#define ADDRESS_SEPARATOR '/'
-#endif
-
+#include"QDir"
 
 TextEditer::TextEditer(QWidget *parent) :
     QMainWindow(parent),
@@ -15,10 +8,6 @@ TextEditer::TextEditer(QWidget *parent) :
 {
     ui->setupUi(this);
     setCentralWidget(ui->tabWidget);
-
-    //-------
-    ui->saveAsAction->setVisible(false);
-    //-------
 
     ui->tabWidget->clear();
     tabIndex = 0;
@@ -39,12 +28,15 @@ TextEditer::TextEditer(QWidget *parent) :
 
     ui->mainToolBar->insertAction(ui->colorAction,ui->mainToolBar->addSeparator());
 
+    setAlignJustify();
+
     //menu bar
 
     //file
     connect(ui->openFileAction,SIGNAL(triggered()),this,SLOT(openFile()));
     connect(ui->newFileAction,SIGNAL(triggered()),this,SLOT(newFile()));
     connect(ui->saveAction,SIGNAL(triggered()),this,SLOT(save()));
+    connect(ui->saveAsAction,SIGNAL(triggered()),this,SLOT(saveAs()));
     //edit
     connect(ui->copyAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(copy()));
     connect(ui->cutAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(cut()));
@@ -101,7 +93,7 @@ QString TextEditer::getTitle(QString fileName){
     std::string str = fileName.toStdString();
     int n = str.size();
     for(int i=n-1;i>=0;--i){
-        if(str[i]==ADDRESS_SEPARATOR){
+        if(str[i]==QDir::separator()){
             str.assign(str.begin()+i+1,str.end());
             return QString::fromStdString(str);
         }

@@ -53,13 +53,7 @@ void TextEditer::loadFile(QTextEdit*textEdit,QString fileName){
     file.close();
 }
 
-void TextEditer::save(){
-    int index = ui->tabWidget->currentIndex();
-    QString fileName = ui->tabWidget->tabText(index);
-    qDebug()<<fileName;
-    if(!fileName.endsWith(tr(".html"))){
-        fileName.append(tr(".html"));
-    }
+void TextEditer::saveIn(int index,QString fileName){
     QFile file(fileName);
     if(!file.open(QFile::WriteOnly)){
         qDebug()<<"open file: "<<fileName<<" error!";
@@ -74,4 +68,23 @@ void TextEditer::save(){
     }
     file.close();
 }
+
+void TextEditer::saveAs(){
+    int index = ui->tabWidget->currentIndex();
+    QString fileName = QFileDialog::getSaveFileName(this);
+    if(!fileName.isEmpty()){
+        saveIn(index,fileName);
+    }
+}
+
+void TextEditer::save(){
+    int index = ui->tabWidget->currentIndex();
+    QString fileName = ui->tabWidget->tabText(index);
+    qDebug()<<fileName;
+    if(!fileName.endsWith(tr(".html"))){
+        fileName.append(tr(".html"));
+    }
+    saveIn(index,fileName);
+}
+
 

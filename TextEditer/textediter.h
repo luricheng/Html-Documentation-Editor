@@ -31,12 +31,14 @@ private:
     QTextEdit*getCurrentTextEdit();//返回当前的TextEdit
     QString getTitle(QString);//提取出文件名
     void mergeCurrentTextFormat(QTextCharFormat*fmt);
+    void saveIn(int index,QString fileName);
 protected slots:
     //menu bar
     void openFile();
     void newFile(QString title = QString());
     void closeTab(int);
     void save();
+    void saveAs();
     //tool bar
     void changeColor();
     void changeItalic();
