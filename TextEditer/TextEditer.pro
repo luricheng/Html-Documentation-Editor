@@ -15,8 +15,11 @@ TEMPLATE = app
 SOURCES += main.cpp\
         textediter.cpp \
     file.cpp \
-    textformat.cpp
+    textformat.cpp \
+    findorrepalce.cpp
 
-HEADERS  += textediter.h
+HEADERS  += textediter.h \
+    findorrepalce.h
 
-FORMS    += textediter.ui
+FORMS    += textediter.ui \
+    findorrepalce.ui

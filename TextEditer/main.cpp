@@ -1,4 +1,5 @@
 #include "textediter.h"
+#include<findorrepalce.h>
 #include <QApplication>
 
 int main(int argc, char *argv[])

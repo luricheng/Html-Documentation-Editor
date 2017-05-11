@@ -58,6 +58,7 @@ void TextEditer::changeFont(QFont font){
     fmt.setFont(font);
     cursor.mergeCharFormat(fmt);
     text->mergeCurrentCharFormat(fmt);
+    fontComboBox->updateGeometry();
 }
 
 void TextEditer::setAlignLeft(){

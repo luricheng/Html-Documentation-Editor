@@ -7,6 +7,10 @@
 #include"QSpinBox"
 #include"QLabel"
 #include"QFontComboBox"
+#include<findorrepalce.h>
+
+class FindOrRepalce;
+
 namespace Ui {
 class TextEditer;
 }
@@ -14,7 +18,7 @@ class TextEditer;
 class TextEditer : public QMainWindow
 {
     Q_OBJECT
-
+    friend class FindOrRepalce;
 public:
     explicit TextEditer(QWidget *parent = 0);
     ~TextEditer();
@@ -28,10 +32,16 @@ private:
     void loadFile(QTextEdit*textEdit,QString fileName);//加载文件
     QLinkedList<std::pair<int,QTextEdit*> >list;//first:tab的序号，second tabWidget中的QTextEdit的指针
     int tabIndex;//下个tab的序号
-    QTextEdit*getCurrentTextEdit();//返回当前的TextEdit
     QString getTitle(QString);//提取出文件名
     void mergeCurrentTextFormat(QTextCharFormat*fmt);
     void saveIn(int index,QString fileName);
+
+    int getIdxInTextEdits(int idx);
+
+    FindOrRepalce*findOrRepalceWidget;
+protected:
+    QTextEdit*getCurrentTextEdit();//返回当前的TextEdit
+
 protected slots:
     //menu bar
     void openFile();
@@ -39,6 +49,10 @@ protected slots:
     void closeTab(int);
     void save();
     void saveAs();
+
+    void findText();
+    //void replaceText();
+
     //tool bar
     void changeColor();
     void changeItalic();
@@ -50,6 +64,9 @@ protected slots:
     void setAlignRight();
     void setAlignCenter();
     void setAlignJustify();
+private slots:
+    void on_aboutAction_triggered(bool checked);
+    void on_actionHelp_triggered();
 };
 
 #endif // TEXTEDITER_H

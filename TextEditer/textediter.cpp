@@ -1,6 +1,8 @@
 #include "textediter.h"
 #include "ui_textediter.h"
 #include"QDir"
+#include<QMessageBox>
+//#include<findorrepalce>
 
 TextEditer::TextEditer(QWidget *parent) :
     QMainWindow(parent),
@@ -13,6 +15,9 @@ TextEditer::TextEditer(QWidget *parent) :
     tabIndex = 0;
     newFile();
 
+    //查找替换窗口
+    findOrRepalceWidget=new FindOrRepalce(this);
+
     //字号
     fontSizeSpinBox=new QSpinBox();
     fontSizeLabel=new QLabel(tr("字号"));
@@ -20,6 +25,7 @@ TextEditer::TextEditer(QWidget *parent) :
     QAction*before=ui->colorAction;
     before=ui->mainToolBar->insertWidget(before,fontSizeSpinBox);
     before=ui->mainToolBar->insertWidget(before,fontSizeLabel);
+
     //字体
     fontComboBox=new QFontComboBox();
     fontLabel=new QLabel(tr("字体"));
@@ -48,6 +54,9 @@ TextEditer::TextEditer(QWidget *parent) :
     connect(ui->closeAction,SIGNAL(triggered()),this,SLOT(close()));
 
 
+    //find
+    connect(ui->findAction,SIGNAL(triggered()),this,SLOT(findText()));
+    connect(ui->replaceAction,SIGNAL(triggered()),this,SLOT(findText()));
     //tool bar
 
     //font
@@ -71,8 +80,9 @@ TextEditer::~TextEditer()
 
 QTextEdit*TextEditer::getCurrentTextEdit(){
     int index=ui->tabWidget->currentIndex();
-    for(QLinkedList<std::pair<int,QTextEdit*> >::iterator it=list.begin();it!=list.end();++it){
-        if(it->first==index){
+    int counter=0;
+    for(QLinkedList<std::pair<int,QTextEdit*> >::iterator it=list.begin();it!=list.end();++it,++counter){
+        if(counter==index){
             return it->second;
         }
     }
@@ -110,4 +120,26 @@ void TextEditer::mergeCurrentTextFormat(QTextCharFormat *fmt){
     }
     cursor.mergeCharFormat(*fmt);
     text->mergeCurrentCharFormat(*fmt);
+}
+
+void TextEditer::findText(){
+    QTextEdit*textEdit=getCurrentTextEdit();
+    if(textEdit!=NULL){
+        this->findOrRepalceWidget->setVisible(true);
+    }
+    else{
+        QMessageBox::warning(this,tr("文本文件不存在"),tr("文本文件不存在，请先建立文本"));
+    }
+}
+
+void TextEditer::on_aboutAction_triggered(bool checked)
+{
+    newFile(tr("about"));
+    loadFile(getCurrentTextEdit(),tr("about"));
+}
+
+void TextEditer::on_actionHelp_triggered()
+{
+    newFile(tr("help"));
+    loadFile(getCurrentTextEdit(),tr("help"));
 }

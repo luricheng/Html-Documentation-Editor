@@ -4,6 +4,19 @@
 #include"QFileDialog"
 #include"QDebug"
 
+int TextEditer::getIdxInTextEdits(int idx){//获取idx标号的TextEdits的真实标号
+    int ans=0;
+    for(QLinkedList<std::pair<int,QTextEdit*> >::iterator it = list.begin();it!=list.end();++it){
+        if(it->first!=idx){
+            ++ans;
+        }
+        else{
+            break;
+        }
+    }
+    return ans;
+}
+
 void TextEditer::openFile(){
     QString fileName = QFileDialog::getOpenFileName(this,"打开新文件");
     if(fileName.isEmpty()){//未选中文件
@@ -17,7 +30,7 @@ void TextEditer::openFile(){
             if(!title.isEmpty()){
                 ui->tabWidget->setTabText(it->first,title);//设置tab标题
             }
-            ui->tabWidget->setCurrentIndex(it->first);//设置当前tab
+            ui->tabWidget->setCurrentIndex(getIdxInTextEdits(it->first));//设置当前tab
             return;
         }
     }
@@ -28,12 +41,12 @@ void TextEditer::openFile(){
 
 void TextEditer::newFile(QString title){
     QTextEdit*newTextEdit = new QTextEdit();
-    if(title.isEmpty()||(title = getTitle(title)).isEmpty()){
+    if(title.isEmpty()&&(title = getTitle(title)).isEmpty()){
         title = "文本" + QString::number(tabIndex);
     }
     ui->tabWidget->addTab(newTextEdit,title);
     list<<std::make_pair(tabIndex,newTextEdit);
-    ui->tabWidget->setCurrentIndex(tabIndex);
+    ui->tabWidget->setCurrentIndex(getIdxInTextEdits(tabIndex));
     tabIndex++;
 }
 
@@ -86,5 +99,3 @@ void TextEditer::save(){
     }
     saveIn(index,fileName);
 }
-
-
