@@ -5,14 +5,14 @@
 #include<QTextEdit>
 #include<QLinkedList>
 #include<textediter.h>
-
+#include<QDialog>
 class TextEditer;
 
 namespace Ui {
 class FindOrRepalce;
 }
 
-class FindOrRepalce : public QWidget
+class FindOrRepalce : public QDialog
 {
 
     Q_OBJECT
@@ -24,8 +24,7 @@ public:
 
 private:
     Ui::FindOrRepalce *ui;
-    //QTextEdit*textEdit;//包含匹配串
-    TextEditer*father;
+    TextEditer*father;//父亲部件
     void findNext(bool);
 protected:
     void setTextEdit(QTextEdit*);

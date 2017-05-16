@@ -5,7 +5,7 @@
 #include<QMessageBox>
 
 FindOrRepalce::FindOrRepalce(TextEditer *father) :
-    QWidget(NULL),
+    QDialog(father),
     ui(new Ui::FindOrRepalce)
 {
     ui->setupUi(this);
@@ -23,7 +23,7 @@ FindOrRepalce::~FindOrRepalce()
     delete ui;
 }
 
-void FindOrRepalce::close(){
+void FindOrRepalce::close(){//伪删除 关闭时只隐藏窗口
     this->setVisible(false);
 }
 

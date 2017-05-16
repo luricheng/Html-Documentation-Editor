@@ -25,20 +25,27 @@ public:
 
 private:
     Ui::TextEditer *ui;
-    QSpinBox*fontSizeSpinBox;
-    QFontComboBox*fontComboBox;
-    QLabel*fontSizeLabel;
-    QLabel*fontLabel;
-    void loadFile(QTextEdit*textEdit,QString fileName);//加载文件
-    QLinkedList<std::pair<int,QTextEdit*> >list;//first:tab的序号，second tabWidget中的QTextEdit的指针
-    int tabIndex;//下个tab的序号
+    QSpinBox*fontSizeSpinBox;//字体大小调整框
+    QFontComboBox*fontComboBox;//字体选择框
+    QLabel*fontSizeLabel;//字体大小标签
+    QLabel*fontLabel;//字体选择标签
+    void loadFile(QTextEdit*textEdit,QString fileName);//载入文件到textEdit,文件名为fileName
+    QVector<QTextEdit*>list;
+    //int tabIndex;//下个tab的序号
     QString getTitle(QString);//提取出文件名
-    void mergeCurrentTextFormat(QTextCharFormat*fmt);
-    void saveIn(int index,QString fileName);
+    void mergeCurrentTextFormat(QTextCharFormat*fmt);//合并fmt到当前的文本格式
+    void saveIn(int index,QString fileName);//保存标号为index的QTextEdit的文本，文件名为fileName
 
-    int getIdxInTextEdits(int idx);
+    int getIdxInTextEdits(int idx);//idx在当前tab中的标号
 
-    FindOrRepalce*findOrRepalceWidget;
+    FindOrRepalce*findOrRepalceWidget;//查找替换窗口
+
+    //初始化函数
+    void initMenuBar();//初始化菜单栏
+    void initToolBar();//工具栏
+    void initFindReplaceBox();//查找替换窗口
+    int getNextTabIdx();
+
 protected:
     QTextEdit*getCurrentTextEdit();//返回当前的TextEdit
 
@@ -65,7 +72,7 @@ protected slots:
     void setAlignCenter();
     void setAlignJustify();
 private slots:
-    void on_aboutAction_triggered(bool checked);
+    void on_aboutAction_triggered();
     void on_actionHelp_triggered();
 };
 

@@ -4,50 +4,38 @@
 #include"QFileDialog"
 #include"QDebug"
 
-int TextEditer::getIdxInTextEdits(int idx){//获取idx标号的TextEdits的真实标号
-    int ans=0;
-    for(QLinkedList<std::pair<int,QTextEdit*> >::iterator it = list.begin();it!=list.end();++it){
-        if(it->first!=idx){
-            ++ans;
-        }
-        else{
-            break;
-        }
-    }
-    return ans;
-}
-
 void TextEditer::openFile(){
     QString fileName = QFileDialog::getOpenFileName(this,"打开新文件");
     if(fileName.isEmpty()){//未选中文件
         return;
     }
+    /*
     //找到第一个为空的textEdit
-    for(QLinkedList<std::pair<int,QTextEdit*> >::iterator it = list.begin();it!=list.end();++it){
-        if(it->second->document()->isEmpty()){
-            loadFile(it->second,fileName);
+    for(auto&it:list){
+        if(it->document()->isEmpty()){
+            loadFile(it,fileName);
             QString title = getTitle(fileName);
+            int idx=list.size();
             if(!title.isEmpty()){
-                ui->tabWidget->setTabText(it->first,title);//设置tab标题
+                ui->tabWidget->setTabText(idx,title);//设置tab标题
             }
-            ui->tabWidget->setCurrentIndex(getIdxInTextEdits(it->first));//设置当前tab
+            ui->tabWidget->setCurrentIndex(idx);//设置当前tab
             return;
         }
-    }
+    }*/
     //没空的，新建一个
     newFile(fileName);
-    loadFile(list.back().second,fileName);
+    loadFile(list.back(),fileName);
 }
 
 void TextEditer::newFile(QString title){
     QTextEdit*newTextEdit = new QTextEdit();
     if(title.isEmpty()&&(title = getTitle(title)).isEmpty()){
-        title = "文本" + QString::number(tabIndex);
+        title = "文本" + QString::number(list.size());
     }
     ui->tabWidget->addTab(newTextEdit,title);
-    list<<std::make_pair(tabIndex,newTextEdit);
-    ui->tabWidget->setCurrentIndex(getIdxInTextEdits(tabIndex));
-    tabIndex++;
+    list<<newTextEdit;
+    ui->tabWidget->setCurrentIndex(list.size()-1);
 }
 
 void TextEditer::loadFile(QTextEdit*textEdit,QString fileName){
@@ -55,10 +43,8 @@ void TextEditer::loadFile(QTextEdit*textEdit,QString fileName){
     QFile file(fileName);
     if(file.open(QIODevice::ReadOnly)){
         QTextStream textStream(&file);
-
         QString line = textStream.readAll();
         textEdit->setHtml(line);
-
     }
     else{
         qDebug()<<"open file:"<<fileName<<" error!"<<endl;
@@ -73,12 +59,10 @@ void TextEditer::saveIn(int index,QString fileName){
         return;
     }
     QTextStream textStream(&file);
-    for(QLinkedList<std::pair<int,QTextEdit*> >::iterator it = list.begin();it!=list.end();++it){
-        if(it->first==index){
-            QTextEdit* textEdit = it->second;
-            textStream<<(textEdit->toHtml());
-        }
-    }
+
+    QTextEdit* textEdit = list[index];
+    textStream<<(textEdit->toHtml());
+
     file.close();
 }
 

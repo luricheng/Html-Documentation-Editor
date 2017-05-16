@@ -2,22 +2,32 @@
 #include "ui_textediter.h"
 #include"QDir"
 #include<QMessageBox>
-//#include<findorrepalce>
 
-TextEditer::TextEditer(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::TextEditer)
-{
-    ui->setupUi(this);
-    setCentralWidget(ui->tabWidget);
+int TextEditer::getNextTabIdx(){
+    return ui->tabWidget->count();
+}
 
-    ui->tabWidget->clear();
-    tabIndex = 0;
-    newFile();
-
-    //查找替换窗口
+void TextEditer::initFindReplaceBox(){//查找替换窗口
     findOrRepalceWidget=new FindOrRepalce(this);
+    connect(ui->findAction,SIGNAL(triggered()),this,SLOT(findText()));
+    connect(ui->replaceAction,SIGNAL(triggered()),this,SLOT(findText()));
+}
 
+void TextEditer::initMenuBar(){//菜单栏
+    //文件
+    connect(ui->openFileAction,SIGNAL(triggered()),this,SLOT(openFile()));
+    connect(ui->newFileAction,SIGNAL(triggered()),this,SLOT(newFile()));
+    connect(ui->saveAction,SIGNAL(triggered()),this,SLOT(save()));
+    connect(ui->saveAsAction,SIGNAL(triggered()),this,SLOT(saveAs()));
+    //编辑
+    connect(ui->copyAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(copy()));
+    connect(ui->cutAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(cut()));
+    connect(ui->pasteAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(paste()));
+    connect(ui->undoAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(undo()));
+    connect(ui->redoAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(redo()));
+}
+
+void TextEditer::initToolBar(){
     //字号
     fontSizeSpinBox=new QSpinBox();
     fontSizeLabel=new QLabel(tr("字号"));
@@ -34,31 +44,6 @@ TextEditer::TextEditer(QWidget *parent) :
 
     ui->mainToolBar->insertAction(ui->colorAction,ui->mainToolBar->addSeparator());
 
-    setAlignJustify();
-
-    //menu bar
-
-    //file
-    connect(ui->openFileAction,SIGNAL(triggered()),this,SLOT(openFile()));
-    connect(ui->newFileAction,SIGNAL(triggered()),this,SLOT(newFile()));
-    connect(ui->saveAction,SIGNAL(triggered()),this,SLOT(save()));
-    connect(ui->saveAsAction,SIGNAL(triggered()),this,SLOT(saveAs()));
-    //edit
-    connect(ui->copyAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(copy()));
-    connect(ui->cutAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(cut()));
-    connect(ui->pasteAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(paste()));
-    connect(ui->undoAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(undo()));
-    connect(ui->redoAction,SIGNAL(triggered()),getCurrentTextEdit(),SLOT(redo()));
-    //other
-    connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
-    connect(ui->closeAction,SIGNAL(triggered()),this,SLOT(close()));
-
-
-    //find
-    connect(ui->findAction,SIGNAL(triggered()),this,SLOT(findText()));
-    connect(ui->replaceAction,SIGNAL(triggered()),this,SLOT(findText()));
-    //tool bar
-
     //font
     connect(ui->colorAction,SIGNAL(triggered()),this,SLOT(changeColor()));
     connect(ui->italicAction,SIGNAL(triggered()),this,SLOT(changeItalic()));
@@ -73,30 +58,42 @@ TextEditer::TextEditer(QWidget *parent) :
     connect(ui->justifyAction,SIGNAL(triggered()),this,SLOT(setAlignJustify()));
 }
 
+TextEditer::TextEditer(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::TextEditer)
+{
+    ui->setupUi(this);
+    setCentralWidget(ui->tabWidget);//设置中心部件
+
+    ui->tabWidget->clear();//清空所以浮动标签页
+    //tabIndex = 0;//从0开始计数
+    newFile();//新建新文件
+
+    initFindReplaceBox();
+    initMenuBar();
+    initToolBar();
+
+    //关闭标签页
+    connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(closeTab(int)));
+    //关闭窗口
+    connect(ui->closeAction,SIGNAL(triggered()),this,SLOT(close()));
+    //适应对齐
+    setAlignJustify();
+}
+
 TextEditer::~TextEditer()
 {
     delete ui;
 }
 
-QTextEdit*TextEditer::getCurrentTextEdit(){
+QTextEdit*TextEditer::getCurrentTextEdit(){//获取当前被选中的QTextEdit
     int index=ui->tabWidget->currentIndex();
-    int counter=0;
-    for(QLinkedList<std::pair<int,QTextEdit*> >::iterator it=list.begin();it!=list.end();++it,++counter){
-        if(counter==index){
-            return it->second;
-        }
-    }
-    return NULL;
+    return list[index];
 }
 
 void TextEditer::closeTab(int index){
     ui->tabWidget->removeTab(index);
-    for(QLinkedList<std::pair<int,QTextEdit*> >::iterator it = list.begin();it!=list.end();++it){
-        if(it->first==index){
-            list.erase(it);
-            return;
-        }
-    }
+    list.removeAt(index);
 }
 
 QString TextEditer::getTitle(QString fileName){
@@ -132,13 +129,13 @@ void TextEditer::findText(){
     }
 }
 
-void TextEditer::on_aboutAction_triggered(bool checked)
+void TextEditer::on_aboutAction_triggered()//关于
 {
     newFile(tr("about"));
     loadFile(getCurrentTextEdit(),tr("about"));
 }
 
-void TextEditer::on_actionHelp_triggered()
+void TextEditer::on_actionHelp_triggered()//帮助
 {
     newFile(tr("help"));
     loadFile(getCurrentTextEdit(),tr("help"));
