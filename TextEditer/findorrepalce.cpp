@@ -36,7 +36,6 @@ void FindOrRepalce::on_findLineEdit_textChanged(const QString &arg1)
 void FindOrRepalce::findNext(bool foreward){
     QTextEdit*textEdit=father->getCurrentTextEdit();
     QString pToFind=ui->findLineEdit->text();
-    ui->next->setEnabled(true);
     bool findAns;
     if(foreward){
         findAns=textEdit->find(pToFind);

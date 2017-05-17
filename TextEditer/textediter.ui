@@ -176,8 +176,8 @@
   </action>
   <action name="undoAction">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/undo.png</normaloff>icons/undo.png</iconset>
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/undo.png</normaloff>:/undo.png</iconset>
    </property>
    <property name="text">
     <string>撤销(Ctrl+Z)</string>
@@ -188,8 +188,8 @@
   </action>
   <action name="redoAction">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/redo.png</normaloff>icons/redo.png</iconset>
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/redo.png</normaloff>:/redo.png</iconset>
    </property>
    <property name="text">
     <string>重做(Ctrl+Y)</string>
@@ -200,8 +200,8 @@
   </action>
   <action name="colorAction">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/color.png</normaloff>icons/color.png</iconset>
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/color.png</normaloff>:/color.png</iconset>
    </property>
    <property name="text">
     <string>颜色</string>
@@ -215,8 +215,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/bold.png</normaloff>icons/bold.png</iconset>
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/bold.png</normaloff>:/bold.png</iconset>
    </property>
    <property name="text">
     <string>加粗</string>
@@ -230,8 +230,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/center.png</normaloff>icons/center.png</iconset>
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/center.png</normaloff>:/center.png</iconset>
    </property>
    <property name="text">
     <string>中心对称</string>
@@ -245,8 +245,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/justify.png</normaloff>icons/justify.png</iconset>
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/justify.png</normaloff>:/justify.png</iconset>
    </property>
    <property name="text">
     <string>适应</string>
@@ -263,8 +263,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/left.png</normaloff>icons/left.png</iconset>
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/left.png</normaloff>:/left.png</iconset>
    </property>
    <property name="text">
     <string>左对齐</string>
@@ -278,8 +278,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/right.png</normaloff>icons/right.png</iconset>
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/right.png</normaloff>:/right.png</iconset>
    </property>
    <property name="text">
     <string>右对齐</string>
@@ -296,8 +296,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/italic.png</normaloff>icons/italic.png</iconset>
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/italic.png</normaloff>:/italic.png</iconset>
    </property>
    <property name="text">
     <string>斜体</string>
@@ -311,8 +311,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/underline.png</normaloff>icons/underline.png</iconset>
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/underline.png</normaloff>:/underline.png</iconset>
    </property>
    <property name="text">
     <string>下划线</string>
@@ -346,6 +346,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icons/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

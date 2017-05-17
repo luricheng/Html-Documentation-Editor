@@ -30,13 +30,9 @@ private:
     QLabel*fontSizeLabel;//字体大小标签
     QLabel*fontLabel;//字体选择标签
     void loadFile(QTextEdit*textEdit,QString fileName);//载入文件到textEdit,文件名为fileName
-    QVector<QTextEdit*>list;
-    //int tabIndex;//下个tab的序号
     QString getTitle(QString);//提取出文件名
     void mergeCurrentTextFormat(QTextCharFormat*fmt);//合并fmt到当前的文本格式
-    void saveIn(int index,QString fileName);//保存标号为index的QTextEdit的文本，文件名为fileName
-
-    int getIdxInTextEdits(int idx);//idx在当前tab中的标号
+    void saveIn(QTextEdit*,QString fileName);//保存标号QTextEdit的文本，文件名为fileName
 
     FindOrRepalce*findOrRepalceWidget;//查找替换窗口
 

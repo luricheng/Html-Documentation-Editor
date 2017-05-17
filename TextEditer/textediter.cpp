@@ -87,13 +87,11 @@ TextEditer::~TextEditer()
 }
 
 QTextEdit*TextEditer::getCurrentTextEdit(){//获取当前被选中的QTextEdit
-    int index=ui->tabWidget->currentIndex();
-    return list[index];
+    return (QTextEdit*)ui->tabWidget->currentWidget();
 }
 
 void TextEditer::closeTab(int index){
     ui->tabWidget->removeTab(index);
-    list.removeAt(index);
 }
 
 QString TextEditer::getTitle(QString fileName){

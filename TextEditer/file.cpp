@@ -25,17 +25,16 @@ void TextEditer::openFile(){
     }*/
     //没空的，新建一个
     newFile(fileName);
-    loadFile(list.back(),fileName);
+    loadFile(getCurrentTextEdit(),fileName);
 }
 
 void TextEditer::newFile(QString title){
+    static qint32 counter=0;
     QTextEdit*newTextEdit = new QTextEdit();
     if(title.isEmpty()&&(title = getTitle(title)).isEmpty()){
-        title = "文本" + QString::number(list.size());
+        title = "文本" + QString::number(++counter);
     }
     ui->tabWidget->addTab(newTextEdit,title);
-    list<<newTextEdit;
-    ui->tabWidget->setCurrentIndex(list.size()-1);
 }
 
 void TextEditer::loadFile(QTextEdit*textEdit,QString fileName){
@@ -52,7 +51,7 @@ void TextEditer::loadFile(QTextEdit*textEdit,QString fileName){
     file.close();
 }
 
-void TextEditer::saveIn(int index,QString fileName){
+void TextEditer::saveIn(QTextEdit*textEdit,QString fileName){
     QFile file(fileName);
     if(!file.open(QFile::WriteOnly)){
         qDebug()<<"open file: "<<fileName<<" error!";
@@ -60,26 +59,24 @@ void TextEditer::saveIn(int index,QString fileName){
     }
     QTextStream textStream(&file);
 
-    QTextEdit* textEdit = list[index];
     textStream<<(textEdit->toHtml());
 
     file.close();
 }
 
 void TextEditer::saveAs(){
-    int index = ui->tabWidget->currentIndex();
     QString fileName = QFileDialog::getSaveFileName(this);
     if(!fileName.isEmpty()){
-        saveIn(index,fileName);
+        saveIn(getCurrentTextEdit(),fileName);
     }
 }
 
 void TextEditer::save(){
-    int index = ui->tabWidget->currentIndex();
-    QString fileName = ui->tabWidget->tabText(index);
+    QTextEdit*textEdit=getCurrentTextEdit();
+    QString fileName = ui->tabWidget->tabText(ui->tabWidget->currentIndex());
     qDebug()<<fileName;
     if(!fileName.endsWith(tr(".html"))){
         fileName.append(tr(".html"));
     }
-    saveIn(index,fileName);
+    saveIn(textEdit,fileName);
 }
